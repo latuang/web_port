@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — La Tuang</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --coffee:#A98060; --mint:#E5ECE9; --coffee-2:#cbb7a1; --coffee-3:#d6c3b3;
+      --ink:#2b2b2b;
+    }
+
+    /* Page background */
+    body{
+      margin:0; font-family:'Merriweather Sans',sans-serif; color:var(--ink);
+      background: linear-gradient(-45deg, var(--coffee), var(--coffee-2), var(--mint), var(--coffee-3));
+      background-size: 400% 400%; animation: auroraShift 18s ease-in-out infinite;
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+    @keyframes auroraShift{
+      0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
+    }
+
+    /* Navbar (matches your site) */
+    .navbar{ background:#fff; border-bottom:2px solid #ddd; }
+    .navbar-brand{ color:var(--coffee); font-weight:700; }
+    .nav-link{ color:#111; border:1px solid var(--coffee); border-radius:10px; padding:6px 12px; margin-right:8px; }
+    .nav-link:hover{ background:var(--coffee); color:#fff; }
+
+    /* Envelope layout */
+    .stage{ flex:1 1 auto; display:grid; place-items:center; padding:4rem 1rem; }
+    .envelope{
+      position:relative; width:min(90vw, 560px); height:360px;
+      perspective:1200px;
+    }
+    /* Envelope body */
+    .env-body{
+      position:absolute; inset:0; border-radius:16px;
+      background: linear-gradient(180deg,#ffffff 0%, #faf6f2 100%);
+      border:2px solid #caa387;
+      box-shadow:0 18px 48px rgba(0,0,0,.18);
+      overflow:hidden;
+    }
+    /* Bottom triangular fold */
+    .env-body::after{
+      content:""; position:absolute; left:0; right:0; bottom:0; height:52%;
+      background:
+        linear-gradient(135deg, transparent 50%, #f2e6dc 50%) left bottom / 50% 100% no-repeat,
+        linear-gradient(-135deg, transparent 50%, #f2e6dc 50%) right bottom / 50% 100% no-repeat;
+    }
+    /* Top flap */
+    .flap{
+      position:absolute; left:0; right:0; top:0; height:58%;
+      transform-origin:top; transform:rotateX(0deg);
+      transition: transform .8s cubic-bezier(.2,.7,.2,1);
+      background:
+        linear-gradient(225deg, #f3e9df 0%, #fff 50%, #eddccc 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-top-left-radius:16px; border-top-right-radius:16px;
+      border:2px solid #caa387; border-bottom:none;
+    }
+    .envelope:hover .flap{ transform: rotateX(58deg); }
+
+    /* The “letter” inside */
+    .letter{
+      position:absolute; left:14px; right:14px; bottom:14px; top:24%;
+      background:#ffffff; border:1px solid #ead9c9; border-radius:12px;
+      padding:1.4rem 1.6rem; box-shadow: inset 0 1px 0 rgba(202,163,135,.35);
+      display:flex; flex-direction:column; justify-content:center; gap:1rem;
+      transition: transform .6s ease; transform: translateY(8px);
+    }
+    .envelope:hover .letter{ transform: translateY(0); }
+
+    .letter h2{ color:var(--coffee); font-weight:800; text-align:center; margin:0 0 .25rem; }
+    .line{ display:flex; align-items:center; gap:.65rem; justify-content:center; }
+    .line i{ color:var(--coffee); }
+    .line a{ color:var(--coffee); text-decoration:none; font-weight:700; }
+    .line a:hover{ text-decoration:underline; }
+
+    /* tiny footer padding */
+    .pad{ height:2rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container-xl">
+      <a class="navbar-brand" href="index.html">La Tuang</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMain">
+        <!-- left group -->
+        <ul class="navbar-nav ms-lg-3 me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="give.html">Give More, Open the Door</a></li>
+          <li class="nav-item"><a class="nav-link" href="films.html">Lights, Camera, Action!</a></li>
+        </ul>
+        <!-- right-aligned Contact (current page) -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Envelope contact card -->
+  <main class="stage">
+    <div class="envelope">
+      <div class="env-body"></div>
+      <div class="flap"></div>
+
+      <div class="letter">
+        <h2>Get in Touch</h2>
+        <div class="line">
+          <i class="bi bi-linkedin"></i>
+          <a href="https://www.linkedin.com/in/khup-tuang" target="_blank" rel="noopener">linkedin.com/in/khup-tuang</a>
+        </div>
+        <div class="line">
+          <i class="bi bi-envelope-fill"></i>
+          <a href="mailto:khup.h.tuang@gmail.com">khup.h.tuang@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="pad"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

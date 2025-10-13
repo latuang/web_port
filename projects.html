@@ -1,4 +1,3 @@
-<!-- projects.html (images constrained to fit thumbnails) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +48,7 @@
     .nav-link{color:#111; border:1px solid #A98060; border-radius:10px; margin:0 5px; padding:6px 12px}
     .nav-link:hover{background:#A98060; color:#fff}
 
-    /* Header (slightly higher) */
+    /* Header */
     .hero-bar{ padding: 3.25rem 0 .25rem; }
     .title{ font-weight:800; color:#A98060; text-decoration:underline; margin-bottom:.15rem }
     .sub{ color:#2b2b2b; margin:0 }
@@ -70,24 +69,29 @@
     }
     .card-proj:hover{ box-shadow:0 18px 56px rgba(0,0,0,.14); border-color:rgba(0,0,0,.55) }
 
-    /* === FIXED THUMBNAILS (no overlap) === */
+    /* Thumbnails */
     .thumb{
       position:relative;
-      height:160px;                     /* consistent, smaller thumb height */
+      height:160px;
       background:linear-gradient(135deg, rgba(169,128,96,.25), rgba(229,236,233,.40));
       border-bottom:1px dashed rgba(0,0,0,.18);
       display:flex; align-items:center; justify-content:center;
-      overflow:hidden;                  /* crop any overflow so it can't cover text */
+      overflow:hidden;
     }
     .thumb img{
       width:100%;
       height:100%;
-      object-fit:cover;                 /* fill nicely without distortion */
+      object-fit:cover;
       display:block;
+    }
+    /* Fit PET dog image properly */
+    .thumb img[src="PET_icon.png"]{
+      object-fit:contain;
+      padding: 10px;
     }
     .thumb .hint{ position:absolute; bottom:.55rem; right:.75rem; font-size:.8rem; color:rgba(0,0,0,.5) }
 
-    .hud{ position:absolute; top:.6rem; left:.6rem; display:flex; gap:.4rem; flex-wrap:wrap }
+    .hud{ position:absolute; top:.6rem; left:.6rem; display:flex; gap:.4rem; flex-wrap:wrap; z-index:2 }
     .hud-badge{
       backdrop-filter:blur(4px); background:rgba(255,255,255,.75);
       border:1px solid rgba(0,0,0,.35); color:#543c2b;
@@ -95,7 +99,7 @@
       box-shadow:var(--glow)
     }
 
-    .body{ padding:1rem 1rem .6rem; display:flex; flex-direction:column; min-height:180px }
+    .body{ padding:1rem 1rem 1.2rem; display:flex; flex-direction:column; }
     .h{ display:flex; align-items:center; gap:.5rem; font-weight:800; margin:0 0 .35rem; color:#3b2b20 }
     .h .bi{ color:#A98060 }
     .txt{ margin:0 0 .9rem; color:#2b2b2b; line-height:1.65 }
@@ -105,21 +109,9 @@
       border-radius:8px; padding:.22rem .5rem; font-size:.78rem; font-weight:700
     }
 
-    /* Inline details reveal (per-card) */
-    .details{ height:0; overflow:hidden; transition:height .35s ease }
-    .details-inner{ padding:.6rem 1rem 1rem; background:rgba(255,255,255,.6) }
-    .details ul{ margin:0; padding-left:1.1rem }
-    .details li{ margin:.25rem 0 }
-
-    .foot{ display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem 1rem }
+    .foot{ display:flex; align-items:center; justify-content:flex-start; padding:0 1rem 1rem }
     .links a{ text-decoration:none; border:1px solid #A98060; padding:.45rem .65rem; border-radius:10px; color:#111; margin-right:.35rem }
     .links a:hover{ background:#A98060; color:#fff }
-    .toggle{
-      display:inline-flex; align-items:center; gap:.45rem; cursor:pointer; user-select:none;
-      border:1px dashed #A98060; padding:.35rem .6rem; border-radius:8px; color:#5a4637; background:rgba(169,128,96,.10)
-    }
-    .toggle .chev{ transition:transform .25s ease }
-    .toggle.active .chev{ transform:rotate(180deg) }
 
     /* Reveal */
     .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease }
@@ -150,19 +142,43 @@
   </div>
 </nav>
 
-
   <!-- HEADER -->
   <header class="container-xl hero-bar">
     <h1 class="title">Projects</h1>
-    <p class="sub">Clean, concise builds with a technical edge. Hover, expand, and explore.</p>
+    <p class="sub"></p>
   </header>
 
   <!-- GRID -->
   <main class="container-xl pb-5">
     <div class="grid">
 
+      <!-- PET - NEW PROJECT -->
+      <article class="card-proj reveal">
+        <div class="thumb">
+          <div class="hud">
+            <span class="hud-badge">🐾 Chrome</span>
+            <span class="hud-badge">Motivation</span>
+            <span class="hud-badge">Featured</span>
+          </div>
+          <img loading="lazy" src="PET_icon.png" alt="PET - Personal Encouragement Tool">
+          <span class="hint">Your digital companion</span>
+        </div>
+        <div class="body">
+          <h3 class="h"><i class="bi bi-heart-fill"></i> PET — Personal Encouragement Tool</h3>
+          <p class="txt">A <strong>Chrome extension</strong> that's your digital companion for staying motivated! Features <strong>Pomodoro timers</strong>, progress trackers with adorable <strong>paw prints</strong>, motivational pop-ups, and customizable avatars. Built to keep my long-distance friends encouraged while I'm away from college. 🐶✨</p>
+          <div class="stack mb-1">
+            <span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">Chrome API</span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="links">
+            <a href="https://chromewebstore.google.com/detail/pet-%E2%80%94-personal-encouragem/ammkmdelhafhpfhfaccbacmfcocaepac" target="_blank" rel="noopener">Download Free</a>
+          </div>
+        </div>
+      </article>
+
       <!-- EEG Headset -->
-      <article class="card-proj reveal" data-card>
+      <article class="card-proj reveal">
         <div class="thumb">
           <div class="hud">
             <span class="hud-badge">BCI</span>
@@ -175,32 +191,14 @@
         <div class="body">
           <h3 class="h"><i class="bi bi-cpu"></i> EEG Headset</h3>
           <p class="txt">Built a brain‑computer interface that lets you control your browser with nothing but your thoughts, powered by <strong>Neurosity EEG</strong>, <strong>WebSockets</strong>, and a custom <strong>Chrome extension</strong>.</p>
-          <div class="stack mb-1">
+          <div class="stack">
             <span class="tag">Neurosity</span><span class="tag">WebSockets</span><span class="tag">JavaScript</span>
           </div>
-        </div>
-        <div class="details" data-details>
-          <div class="details-inner">
-            <ul>
-              <li>Signal parsing & smoothing for attention/intent detection.</li>
-              <li>Low‑latency channel via WS to content script + background.</li>
-              <li>Hands‑free tab navigation & quick actions.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="foot">
-          <div class="links">
-            <a href="#" tabindex="-1">Demo</a>
-            <a href="#" tabindex="-1">GitHub</a>
-          </div>
-          <button class="toggle" type="button" data-toggle>
-            Details <i class="bi bi-chevron-down chev"></i>
-          </button>
         </div>
       </article>
 
       <!-- Safeline -->
-      <article class="card-proj reveal" data-card>
+      <article class="card-proj reveal">
         <div class="thumb">
           <div class="hud">
             <span class="hud-badge">Mobile</span>
@@ -213,32 +211,14 @@
         <div class="body">
           <h3 class="h"><i class="bi bi-shield-check"></i> Safeline</h3>
           <p class="txt">Built a transit safety app serving LA riders with real‑time rerouting, crime heatmaps, and community alerts for safer commutes.</p>
-          <div class="stack mb-1">
+          <div class="stack">
             <span class="tag">React Native</span><span class="tag">Firebase</span><span class="tag">REST APIs</span>
           </div>
-        </div>
-        <div class="details" data-details>
-          <div class="details-inner">
-            <ul>
-              <li>Crime data fused with transit GTFS for dynamic risk scoring.</li>
-              <li>Heatmap rendering + safe route suggestions.</li>
-              <li>Push notifications for crowd‑sourced alerts.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="foot">
-          <div class="links">
-            <a href="#" tabindex="-1">Case Study</a>
-            <a href="#" tabindex="-1">GitHub</a>
-          </div>
-          <button class="toggle" type="button" data-toggle>
-            Details <i class="bi bi-chevron-down chev"></i>
-          </button>
         </div>
       </article>
 
       <!-- ToneMatrix -->
-      <article class="card-proj reveal" data-card>
+      <article class="card-proj reveal">
         <div class="thumb">
           <div class="hud">
             <span class="hud-badge">Audio</span>
@@ -251,32 +231,14 @@
         <div class="body">
           <h3 class="h"><i class="bi bi-music-note-beamed"></i> ToneMatrix</h3>
           <p class="txt">Designed an interactive audio sequencer where users build looping melodies on a dynamic grid with custom real‑time playback logic.</p>
-          <div class="stack mb-1">
+          <div class="stack">
             <span class="tag">WebAudio API</span><span class="tag">Canvas</span><span class="tag">TypeScript</span>
           </div>
-        </div>
-        <div class="details" data-details>
-          <div class="details-inner">
-            <ul>
-              <li>Step sequencer with per‑cell envelopes & swing.</li>
-              <li>Canvas‑based visualizer synced to BPM.</li>
-              <li>Export/import pattern snapshots.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="foot">
-          <div class="links">
-            <a href="#" tabindex="-1">Live Demo</a>
-            <a href="#" tabindex="-1">GitHub</a>
-          </div>
-          <button class="toggle" type="button" data-toggle>
-            Details <i class="bi bi-chevron-down chev"></i>
-          </button>
         </div>
       </article>
 
       <!-- Meme Calculator -->
-      <article class="card-proj reveal" data-card>
+      <article class="card-proj reveal">
         <div class="thumb">
           <div class="hud">
             <span class="hud-badge">Fun</span>
@@ -289,27 +251,9 @@
         <div class="body">
           <h3 class="h"><i class="bi bi-emoji-laughing"></i> Meme Calculator</h3>
           <p class="txt">Developed a playful calculator that surprises users with memes whenever the result matches a culturally iconic number.</p>
-          <div class="stack mb-1">
+          <div class="stack">
             <span class="tag">JavaScript</span><span class="tag">DOM</span><span class="tag">UX Fun</span>
           </div>
-        </div>
-        <div class="details" data-details>
-          <div class="details-inner">
-            <ul>
-              <li>Pattern detection for “iconic” numbers.</li>
-              <li>Lightweight meme library with throttling.</li>
-              <li>Accessible keyboard‑first interactions.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="foot">
-          <div class="links">
-            <a href="#" tabindex="-1">Try It</a>
-            <a href="#" tabindex="-1">GitHub</a>
-          </div>
-          <button class="toggle" type="button" data-toggle>
-            Details <i class="bi bi-chevron-down chev"></i>
-          </button>
         </div>
       </article>
 
@@ -318,7 +262,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Reveal on scroll (re-animate on leave/enter)
+    // Reveal on scroll
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){ e.target.classList.add('in'); }
@@ -327,29 +271,9 @@
     }, {threshold:.15});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    // Per-card Details expand with auto height (doesn't touch other cards)
-    document.querySelectorAll('[data-card]').forEach(card=>{
-      const toggle  = card.querySelector('[data-toggle]');
-      const details = card.querySelector('[data-details]');
-      if(!toggle || !details) return;
-
-      let open = false;
-      const inner = details.querySelector('.details-inner');
-      const getH  = ()=> inner.getBoundingClientRect().height;
-      const setH  = h => details.style.height = h + 'px';
-
-      toggle.addEventListener('click', ()=>{
-        open = !open;
-        toggle.classList.toggle('active', open);
-        if(open) setH(getH()); else setH(0);
-      });
-
-      window.addEventListener('resize', ()=>{ if(open) setH(getH()); });
-    });
-
-    // Subtle 3D tilt on hover (per card)
+    // 3D tilt on hover
     const maxTilt = 6;
-    document.querySelectorAll('[data-card]').forEach(card=>{
+    document.querySelectorAll('.card-proj').forEach(card=>{
       card.addEventListener('mousemove', (e)=>{
         const r = card.getBoundingClientRect();
         const cx = r.left + r.width/2, cy = r.top + r.height/2;

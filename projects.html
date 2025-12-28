@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects — La Tuang</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --coffee:#A98060; --mint:#E5ECE9; --coffee-2:#cbb7a1; --coffee-3:#d6c3b3;
+      --ink:#1f1b17; --line:rgba(0,0,0,.35);
+      --card-bg: rgba(255,255,255,.88);
+      --glow: 0 10px 40px rgba(169,128,96,.30);
+    }
+
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Merriweather Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      overflow-x:hidden; color:#111;
+      background:
+        radial-gradient(1200px 800px at 120% -10%, rgba(233,240,238,.55), transparent 55%),
+        radial-gradient(1000px 700px at -10% 110%, rgba(201,176,150,.35), transparent 60%),
+        linear-gradient(-45deg, var(--coffee), var(--coffee-2), var(--mint), var(--coffee-3));
+      background-size:auto,auto,400% 400%;
+      animation: auroraShift 22s ease-in-out infinite;
+      position:relative; isolation:isolate;
+    }
+    body::before{
+      content:""; position:fixed; inset:0;
+      background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px);
+      background-size:22px 22px; animation: drift 30s linear infinite;
+      pointer-events:none; mix-blend-mode:multiply; opacity:.45; z-index:-1;
+    }
+    @keyframes auroraShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @keyframes drift{from{background-position:0 0}to{background-position:200px 140px}}
+
+    /* Navbar */
+    .navbar{background:#fff; border-bottom:2px solid #ddd}
+    .navbar-brand{color:#A98060; font-weight:700}
+    .nav-link{color:#111; border:1px solid #A98060; border-radius:10px; margin:0 5px; padding:6px 12px}
+    .nav-link:hover{background:#A98060; color:#fff}
+
+    /* Header */
+    .hero-bar{ padding: 3.25rem 0 .25rem; }
+    .title{ font-weight:800; color:#A98060; text-decoration:underline; margin-bottom:.15rem }
+    .sub{ color:#2b2b2b; margin:0 }
+
+    /* Grid */
+    .grid{ display:grid; gap:1.2rem }
+    @media (min-width:768px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)) } }
+    @media (min-width:1200px){ .grid{ grid-template-columns:repeat(3,minmax(0,1fr)) } }
+
+    /* Project card */
+    .card-proj{
+      position:relative; background:var(--card-bg);
+      border:1px solid var(--line);
+      border-radius:16px; overflow:hidden;
+      box-shadow:0 14px 40px rgba(0,0,0,.10);
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      transform-style:preserve-3d; will-change:transform;
+    }
+    .card-proj:hover{ box-shadow:0 18px 56px rgba(0,0,0,.14); border-color:rgba(0,0,0,.55) }
+
+    /* Thumbnails */
+    .thumb{
+      position:relative;
+      height:160px;
+      background:linear-gradient(135deg, rgba(169,128,96,.25), rgba(229,236,233,.40));
+      border-bottom:1px dashed rgba(0,0,0,.18);
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    /* Fit PET dog image properly */
+    .thumb img[src="PET_icon.png"],
+    .thumb img[src="MindOrbit.png"]{
+      object-fit:contain;
+      padding: 10px;
+    }
+    .thumb .hint{ position:absolute; bottom:.55rem; right:.75rem; font-size:.8rem; color:rgba(0,0,0,.5) }
+
+    .hud{ position:absolute; top:.6rem; left:.6rem; display:flex; gap:.4rem; flex-wrap:wrap; z-index:2 }
+    .hud-badge{
+      backdrop-filter:blur(4px); background:rgba(255,255,255,.75);
+      border:1px solid rgba(0,0,0,.35); color:#543c2b;
+      padding:.15rem .45rem; border-radius:999px; font-size:.78rem; font-weight:700;
+      box-shadow:var(--glow)
+    }
+
+    .body{ padding:1rem 1rem 1.2rem; display:flex; flex-direction:column; }
+    .h{ display:flex; align-items:center; gap:.5rem; font-weight:800; margin:0 0 .35rem; color:#3b2b20 }
+    .h .bi{ color:#A98060 }
+    .txt{ margin:0 0 .9rem; color:#2b2b2b; line-height:1.65 }
+    .stack .tag{
+      display:inline-block; margin:.15rem .3rem .15rem 0;
+      border:1px solid #A98060; color:#5a4637; background:rgba(169,128,96,.14);
+      border-radius:8px; padding:.22rem .5rem; font-size:.78rem; font-weight:700
+    }
+
+    .foot{ display:flex; align-items:center; justify-content:flex-start; padding:0 1rem 1rem }
+    .links a{ text-decoration:none; border:1px solid #A98060; padding:.45rem .65rem; border-radius:10px; color:#111; margin-right:.35rem }
+    .links a:hover{ background:#A98060; color:#fff }
+
+    /* Reveal */
+    .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease }
+    .reveal.in{ opacity:1; transform:translateY(0) }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container-xl">
+    <a class="navbar-brand" href="index.html">La Tuang</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMain">
+      <!-- Left links -->
+      <ul class="navbar-nav ms-lg-3 me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="give.html">Give More, Open the Door</a></li>
+        <li class="nav-item"><a class="nav-link" href="films.html">Lights, Camera, Action!</a></li>
+      </ul>
+      <!-- Right-aligned Contact -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- HEADER -->
+  <header class="container-xl hero-bar">
+    <h1 class="title">Projects</h1>
+    <p class="sub"></p>
+  </header>
+
+  <!-- GRID -->
+  <main class="container-xl pb-5">
+    <div class="grid">
+
+      <!-- MindOrbit -->
+      <article class="card-proj reveal">
+        <div class="thumb">
+          <div class="hud">
+            <span class="hud-badge">XR</span>
+            <span class="hud-badge">WebSpatial</span>
+            <span class="hud-badge">Hackathon</span>
+          </div>
+          <img loading="lazy" src="MindOrbit.png" alt="MindOrbit - Spatial Workspace">
+          <span class="hint">Spatial workspace</span>
+        </div>
+        <div class="body">
+          <h3 class="h"><i class="bi bi-globe"></i> MindOrbit</h3>
+          <p class="txt">A <strong>multi-scene spatial workspace</strong> for WebSpatial and XR that replaces flat tabs with floating panels you can arrange around you. Features a floating music player, customizable subject tabs, and an orbiting planner. Built with <strong>React, TypeScript, and WebSpatial SDK</strong> to create an intuitive 3D workspace that matches how people actually think and work.</p>
+          <div class="stack">
+            <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">WebSpatial</span><span class="tag">XR</span><span class="tag">Vite</span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="links">
+            <a href="https://devpost.com/software/1115191" target="_blank" rel="noopener">View on Devpost</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- PET - NEW PROJECT -->
+      <article class="card-proj reveal">
+        <div class="thumb">
+          <div class="hud">
+            <span class="hud-badge">🐾 Chrome</span>
+            <span class="hud-badge">Motivation</span>
+            <span class="hud-badge">Featured</span>
+          </div>
+          <img loading="lazy" src="PET_icon.png" alt="PET - Personal Encouragement Tool">
+          <span class="hint">Your digital companion</span>
+        </div>
+        <div class="body">
+          <h3 class="h"><i class="bi bi-heart-fill"></i> PET — Personal Encouragement Tool</h3>
+          <p class="txt">A <strong>Chrome extension</strong> that's your digital companion for staying motivated! Features <strong>Pomodoro timers</strong>, progress trackers with adorable <strong>paw prints</strong>, motivational pop-ups, and customizable avatars. Built to keep my long-distance friends encouraged while I'm away from college. 🐶✨</p>
+          <div class="stack mb-1">
+            <span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">Chrome API</span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="links">
+            <a href="https://chromewebstore.google.com/detail/pet-%E2%80%94-personal-encouragem/ammkmdelhafhpfhfaccbacmfcocaepac" target="_blank" rel="noopener">Download Free</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- EEG Headset -->
+      <article class="card-proj reveal">
+        <div class="thumb">
+          <div class="hud">
+            <span class="hud-badge">BCI</span>
+            <span class="hud-badge">Neurosity</span>
+            <span class="hud-badge">Chrome Ext</span>
+          </div>
+          <img loading="lazy" src="EEG_image.jpeg" alt="EEG headset graphic">
+          <span class="hint">EEG demo</span>
+        </div>
+        <div class="body">
+          <h3 class="h"><i class="bi bi-cpu"></i> EEG Headset</h3>
+          <p class="txt">Built a brain‑computer interface that lets you control your browser with nothing but your thoughts, powered by <strong>Neurosity EEG</strong>, <strong>WebSockets</strong>, and a custom <strong>Chrome extension</strong>.</p>
+          <div class="stack">
+            <span class="tag">Neurosity</span><span class="tag">WebSockets</span><span class="tag">JavaScript</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Safeline -->
+      <article class="card-proj reveal">
+        <div class="thumb">
+          <div class="hud">
+            <span class="hud-badge">Mobile</span>
+            <span class="hud-badge">Maps</span>
+            <span class="hud-badge">Safety</span>
+          </div>
+          <img loading="lazy" src="public_transport.jpg" alt="Public transit icon">
+          <span class="hint">Safeline</span>
+        </div>
+        <div class="body">
+          <h3 class="h"><i class="bi bi-shield-check"></i> Safeline</h3>
+          <p class="txt">Built a transit safety app serving LA riders with real‑time rerouting, crime heatmaps, and community alerts for safer commutes.</p>
+          <div class="stack">
+            <span class="tag">React Native</span><span class="tag">Firebase</span><span class="tag">REST APIs</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ToneMatrix -->
+      <article class="card-proj reveal">
+        <div class="thumb">
+          <div class="hud">
+            <span class="hud-badge">Audio</span>
+            <span class="hud-badge">WebAudio</span>
+            <span class="hud-badge">Grid</span>
+          </div>
+          <img loading="lazy" src="tone_wave.jpeg" alt="Waveform icon">
+          <span class="hint">ToneMatrix</span>
+        </div>
+        <div class="body">
+          <h3 class="h"><i class="bi bi-music-note-beamed"></i> ToneMatrix</h3>
+          <p class="txt">Designed an interactive audio sequencer where users build looping melodies on a dynamic grid with custom real‑time playback logic.</p>
+          <div class="stack">
+            <span class="tag">WebAudio API</span><span class="tag">Canvas</span><span class="tag">TypeScript</span>
+          </div>
+        </div>
+      </article>
+
+        <!-- Meme Calculator -->
+        <article class="card-proj reveal">
+          <div class="thumb">
+            <div class="hud">
+              <span class="hud-badge">Fun</span>
+              <span class="hud-badge">JS</span>
+              <span class="hud-badge">UX</span>
+            </div>
+            <img loading="lazy" src="groovy_calculator.jpeg" alt="Fun calculator illustration">
+            <span class="hint">Meme Calc</span>
+          </div>
+          <div class="body">
+            <h3 class="h"><i class="bi bi-emoji-laughing"></i> Meme Calculator</h3>
+            <p class="txt">Developed a playful calculator that surprises users with memes whenever the result matches a culturally iconic number.</p>
+            <div class="stack">
+              <span class="tag">JavaScript</span><span class="tag">DOM</span><span class="tag">UX Fun</span>
+            </div>
+          </div>
+        </article>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in'); }
+        else{ e.target.classList.remove('in'); }
+      });
+    }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // 3D tilt on hover
+    const maxTilt = 6;
+    document.querySelectorAll('.card-proj').forEach(card=>{
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const cx = r.left + r.width/2, cy = r.top + r.height/2;
+        const dx = (e.clientX - cx)/(r.width/2), dy = (e.clientY - cy)/(r.height/2);
+        card.style.transform = `rotateX(${(-dy*maxTilt).toFixed(2)}deg) rotateY(${(dx*maxTilt).toFixed(2)}deg)`;
+      });
+      card.addEventListener('mouseleave', ()=> card.style.transform = 'rotateX(0) rotateY(0)');
+    });
+  </script>
+</body>
+</html>
